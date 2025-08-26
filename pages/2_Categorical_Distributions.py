@@ -1,21 +1,19 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
-import os
 
-FILE_PATH = "heart_disease_dataset.csv"
 
-st.title("📊 Categorical Distributions")
+@st.cache_data
+def load_data():
+    return pd.read_csv("heart_disease_dataset.csv")
 
-if os.path.exists(FILE_PATH):
-    df = pd.read_csv(FILE_PATH)
 
-    categorical_cols = df.select_dtypes(include=['int64', 'object']).columns.tolist()
-    for col in categorical_cols:
-        if df[col].nunique() < 20:
-            st.write(f"**{col}**")
-            fig, ax = plt.subplots(figsize=(4,3))
-            df[col].value_counts().plot(kind='bar', ax=ax)
-            st.pyplot(fig)
-else:
-    st.error(f"File '{FILE_PATH}' not found.")
+data = load_data()
+
+
+st.header("Categorical Distributions")
+
+
+categorical_cols = ['cp', 'thal', 'restecg', 'slope']
+for col in categorical_cols:
+    st.write(f"**{col}**")
+    st.write(data[col].value_counts())
