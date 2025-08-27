@@ -4,7 +4,7 @@ import os
 
 FILE_PATH = "heart_disease_dataset.csv"
 
-st.title("📄 Metadata & Information")
+st.title("Metadata & Information")
 
 # Column descriptions with mappings
 COLUMN_INFO = {
